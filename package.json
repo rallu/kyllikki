@@ -1,9 +1,6 @@
 {
   "name": "root",
   "private": true,
-  "scripts": {
-    "example-pets": "ts-node examples/run.ts"
-  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.15",
     "@types/node": "^10.12.12",
