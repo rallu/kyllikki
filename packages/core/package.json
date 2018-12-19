@@ -1,0 +1,47 @@
+{
+  "name": "@kyllikki/core",
+  "version": "0.1.0",
+  "description": "Opinionated framework to build Serverless API's in AWS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rallu/kyllikki.git"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "serverless",
+    "openapi",
+    "swagger",
+    "server",
+    "api gateway",
+    "api",
+    "kyllikki"
+  ],
+  "author": "Juha-Pekka Rajaniemi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rallu/kyllikki/issues"
+  },
+  "homepage": "https://github.com/rallu/kyllikki#readme",
+  "devDependencies": {
+    
+  },
+  "dependencies": {
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@aws/dynamodb-data-marshaller": "^0.7.3",
+    "@types/joi": "^14.0.1",
+    "@types/json-schema": "^7.0.1",
+    "joi": "^14.3.0",
+    "joi-to-json-schema": "^3.4.0"
+  },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "LICENSE"
+  ]
+}
