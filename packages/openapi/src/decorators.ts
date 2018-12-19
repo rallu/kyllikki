@@ -1,5 +1,6 @@
-import { OpenApiMeta } from "./../meta";
+import { KyllikkiMeta } from "@kyllikki/core";
 import { JSONSchema7 } from "json-schema";
+import { ResponseStore } from "./store";
 
 export interface OpenApiResponseParams {
   responseCode: number;
@@ -16,6 +17,6 @@ interface DynamoReferenceObject {
 
 export function OpenApiResponse(params: OpenApiResponseParams) {
   return function(target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    OpenApiMeta.registerResponse(descriptor.value, params);
+    ResponseStore.registerResponse(descriptor.value, params);
   };
 }

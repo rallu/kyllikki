@@ -1,5 +1,5 @@
-import { OpenApi } from "../../packages/core";
-import { OpenApiResponse } from "../../packages/core";
+import { GET } from "@kyllikki/core";
+import { OpenApiResponse } from "@kyllikki/openapi";
 import { attribute, table } from "@aws/dynamodb-data-mapper-annotations";
 import * as Joi from "joi";
 
@@ -10,9 +10,7 @@ class Pet {
 }
 
 export class PetsApi {
-  @OpenApi({
-    method: "GET",
-    resource: "/pets",
+  @GET("/pets", {
     validation: {
       body: Joi.object().keys({
         foo: Joi.string()

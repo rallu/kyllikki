@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from "aws-lambda";
 
-export class OpenApiResponse {
+export class ApiResponse {
   message: any;
   code: number;
   constructor(message: any, code = 200) {

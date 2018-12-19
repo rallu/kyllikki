@@ -1,16 +1,15 @@
 import { APIGatewayEvent } from "aws-lambda";
-import { OpenApiResponse } from "./response";
-import { OpenApiParams } from "./decorators/openApi";
+import { ApiResponse } from "./response";
+import { KyllikkiApiParams } from "./kyllikkiApi";
 import { JSONSchema7 } from "json-schema";
-import { OpenApiResponseParams } from "./decorators/openApiResponse";
 
-type OpenApiFunction = (event: APIGatewayEvent) => OpenApiResponse;
+type KyllikkiApiFunction = (event: APIGatewayEvent) => ApiResponse;
 
 export interface OpenApiFunctionObject {
-  identifierFunction: OpenApiFunction;
+  identifierFunction: KyllikkiApiFunction;
   methodName: string;
-  func: OpenApiFunction;
-  openApiParams: OpenApiParams;
+  func: KyllikkiApiFunction;
+  openApiParams: KyllikkiApiParams;
   responses?: {
     [code: number]: {
       description?: string;
@@ -22,33 +21,12 @@ export interface OpenApiFunctionObject {
       };
     };
   };
-  openApiResponseParams?: OpenApiResponseParams[];
 }
 
-interface OpenApiResponses {
-  identifierFunction: OpenApiFunction;
-  params: OpenApiResponseParams;
-}
-
-export class OpenApiMeta {
-  static methods: OpenApiFunctionObject[] = [];
-  static responses: OpenApiResponses[] = [];
+export class KyllikkiMeta {
+  public static methods: OpenApiFunctionObject[] = [];
 
   static registerMethod(functionParams: OpenApiFunctionObject) {
-    functionParams.openApiResponseParams = this.responses
-      .filter(response => response.identifierFunction === functionParams.identifierFunction)
-      .map(response => response.params);
     this.methods.push(functionParams);
-  }
-
-  static registerResponse(identifierFunction: OpenApiFunction, params: OpenApiResponseParams) {
-    this.responses.push({
-      identifierFunction,
-      params
-    });
-  }
-
-  static getMethod(func: OpenApiFunction): OpenApiFunctionObject | undefined {
-    return this.methods.find(method => method.func === func);
   }
 }

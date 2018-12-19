@@ -20,7 +20,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@kyllikki/core": ["../packages/core/"]
+      "@kyllikki/core": ["../core"],
+      "@kyllikki/openapi": ["../openapi"]
     }
   },
   "exclude": ["node_modules"]

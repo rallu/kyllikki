@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "outDir": "dist",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom", "es6", "es2015", "esnext.asynciterable"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noImplicitThis": true,
+    "noImplicitReturns": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@kyllikki/core": ["../core"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "examples"]
+}

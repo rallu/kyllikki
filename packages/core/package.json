@@ -28,16 +28,12 @@
     "url": "https://github.com/rallu/kyllikki/issues"
   },
   "homepage": "https://github.com/rallu/kyllikki#readme",
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "dependencies": {
-    "@aws/dynamodb-data-mapper": "^0.7.3",
-    "@aws/dynamodb-data-marshaller": "^0.7.3",
+    "@types/aws-lambda": "^8.10.16",
     "@types/joi": "^14.0.1",
     "@types/json-schema": "^7.0.1",
-    "joi": "^14.3.0",
-    "joi-to-json-schema": "^3.4.0"
+    "joi": "^14.3.0"
   },
   "files": [
     "dist/**/*",

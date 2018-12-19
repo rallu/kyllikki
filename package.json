@@ -5,13 +5,8 @@
     "example-pets": "ts-node examples/run.ts"
   },
   "devDependencies": {
-    "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@types/aws-lambda": "^8.10.15",
     "@types/node": "^10.12.12",
-    "aws-lambda": "^0.1.2",
-    "aws-sdk": "^2.374.0",
-    "joi": "^14.3.0",
-    "lerna": "^3.6.0",
-    "ts-node": "^7.0.1"
+    "lerna": "^3.6.0"
   }
 }
