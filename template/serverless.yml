@@ -1,0 +1,17 @@
+service:
+  name: aws-nodejs-typescript-kyllikki
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  hello:
+    handler: handler.main
+    events:
+      - http:
+          method: get
+          path: hello
