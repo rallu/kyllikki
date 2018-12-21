@@ -35,6 +35,9 @@ export class PetsApi {
   async getPets(): Promise<Pet[]> {
     return [
       {
+        id: "kyllikki"
+      },
+      {
         id: "fluffy"
       },
       {

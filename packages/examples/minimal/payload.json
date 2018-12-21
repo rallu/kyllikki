@@ -1,0 +1,10 @@
+{
+  "resource": "/pets",
+  "path": "/pets",
+  "httpMethod": "GET",
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "body": "{\"foo\": \"bar\"}",
+  "isBase64Encoded": false
+}
