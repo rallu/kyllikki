@@ -5,13 +5,12 @@ import { ApiResponse } from "./response";
 import { KyllikkiApiParams, ApiValidations } from "./kyllikkiApi";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
-
 export class ApiRunner {
   constructor(apiEndpoints: Array<any>) {
     // Nothing to do them yet. But they need to be listed in order for decorators to run them.
   }
 
-  async runDecorators(event: APIGatewayProxyEvent): Promise<any> {
+  async run(event: APIGatewayProxyEvent): Promise<any> {
     const method = KyllikkiMeta.methods.find(
       method => method.openApiParams.resource === event.resource && method.openApiParams.method === event.httpMethod
     );

@@ -1,6 +1,6 @@
 # Kyllikki API framework (work-in-process)
 
-Kyllikki is highly opionated framework for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to generate code that is easy to read and understand how your API works. For that reason @decorator based aproach is used. It is build with idea that code should generate OpenApi 3+ documentation from the API.
+Kyllikki is highly opionated framework for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to generate code that is easy to read and understand how your API works. For that reason @decorator based aproach is used. It is build with idea that code should generate OpenApi v3+ documentation from the API.
 
 This library works well with [Serverless-webpack](https://github.com/serverless-heaven/serverless-webpack). Requires experimental decorators supports in `tsconfig.json`. Add `"experimentalDecorators": true` to `compilerOptions`.
 
@@ -13,7 +13,7 @@ Has lot of freedom:
 It has several limitations:
 
 - All data is JSON. No other choices.
-- Everything is build around AWS Api Gateway. (May change in future)
+- Everything is build around AWS Api Gateway. (May change in the future)
 
 ## Basic examples
 
@@ -58,7 +58,7 @@ import { ApiRunner } from "@kyllikki/core";
 export const main: Handler = async (event: APIGatewayEvent, context: Context, callback: Callback) => {
   return await new ApiRunner([
     new Cats() // List of classes you wish for this handler to respond to
-  ]).runDecorators(event);
+  ]).run(event);
 };
 ```
 
@@ -112,7 +112,7 @@ export class Cats {
   async saveCat(event: APIGatewayEvent) {
     await myCatStore.save(JSON.parse(event.body)); // may throw `new MyCatStoreSaveError`
     return {
-      succesfull: true
+      succesful: true
     };
   }
 }

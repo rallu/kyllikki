@@ -6,7 +6,7 @@ import {
   OpenApiPaths,
   OpenApiPathSchema,
   OpenApiServer
-} from "@kyllikki/core";
+} from "./model";
 import { generateJsonSchema } from "./awsDataMapperToJSON";
 import * as joiJson from "joi-to-json-schema";
 import { ResponseStore } from "./store";
