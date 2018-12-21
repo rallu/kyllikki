@@ -24,5 +24,10 @@
     "joi-to-json-schema": "^3.4.0",
     "json-schema": "^0.2.3",
     "@kyllikki/core": "^0.1.0"
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "LICENSE"
+  ]
 }

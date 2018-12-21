@@ -10,7 +10,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.main
+    handler: src/handler.main
     events:
       - http:
           method: get
