@@ -15,6 +15,16 @@ It has several limitations:
 - All data is JSON. No other choices.
 - Everything is build around AWS Api Gateway. (May change in the future)
 
+## Quick start
+
+Requires serverless cli installed globally _(npm install -g serverless)_
+
+```bash
+> serverless create --template-url https://github.com/rallu/kyllikki/tree/master/template --path myproject
+> cd myproject
+> npm install
+```
+
 ## Basic examples
 
 Define your code in a class. For example this could be in `cats.ts`.
