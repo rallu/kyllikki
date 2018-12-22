@@ -1,6 +1,6 @@
 {
   "name": "@kyllikki/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opinionated framework to build Serverless API's in AWS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,7 +28,6 @@
     "url": "https://github.com/rallu/kyllikki/issues"
   },
   "homepage": "https://github.com/rallu/kyllikki#readme",
-  "devDependencies": {},
   "dependencies": {
     "@types/aws-lambda": "^8.10.16",
     "@types/joi": "^14.0.1",
