@@ -199,7 +199,10 @@ import { OpenApi } from "@kyllikki/openapi";
 export const main: Handler = async (event: APIGatewayEvent, context: Context, callback: Callback) => {
   return await new OpenApi([
     new Cats() // List of classes you wish to add in the document
-  ]).describeApi();
+  ]).describeApi({
+    title: "My Cat Api",
+    version: "1.0.0"
+  });
 };
 ```
 

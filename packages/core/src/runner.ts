@@ -1,16 +1,15 @@
 import * as Joi from "joi";
 import { KyllikkiMeta } from "./meta";
-
 import { ApiResponse } from "./response";
-import { KyllikkiApiParams, ApiValidations } from "./kyllikkiApi";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import { KyllikkiApiParams } from "./kyllikkiApi";
+import { APIGatewayEvent } from "aws-lambda";
 
 export class ApiRunner {
   constructor(apiEndpoints: Array<any>) {
     // Nothing to do them yet. But they need to be listed in order for decorators to run them.
   }
 
-  async run(event: APIGatewayProxyEvent): Promise<any> {
+  async run(event: APIGatewayEvent): Promise<any> {
     const method = KyllikkiMeta.methods.find(
       method => method.openApiParams.resource === event.resource && method.openApiParams.method === event.httpMethod
     );
@@ -58,7 +57,7 @@ export class ApiRunner {
   }
 }
 
-async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayProxyEvent): Promise<any> {
+async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayEvent): Promise<any> {
   const promises: any[] = [];
   const validations = apiParams.validation;
 
