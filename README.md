@@ -25,6 +25,12 @@ Requires serverless cli installed globally _(npm install -g serverless)_
 > npm install
 ```
 
+And then you can run the hello world to test it.
+
+```bash
+> serverless invoke local -f hello --data '{"resource": "/hello", "httpMethod": "GET"}'
+```
+
 ## Basic examples
 
 Define your code in a class. For example this could be in `cats.ts`.
