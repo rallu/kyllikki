@@ -9,7 +9,6 @@
     "moduleResolution": "node",
     "lib": ["es2017", "dom", "es6", "es2015", "esnext.asynciterable"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "declaration": true,
     "noImplicitAny": false,

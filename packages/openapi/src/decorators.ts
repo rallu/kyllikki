@@ -1,4 +1,4 @@
-import { KyllikkiMeta } from "@kyllikki/core";
+import "reflect-metadata";
 import { JSONSchema7 } from "json-schema";
 import { ResponseStore } from "./store";
 
