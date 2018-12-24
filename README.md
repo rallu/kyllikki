@@ -1,8 +1,8 @@
-# Kyllikki API framework (work-in-process)
+# Kyllikki API template
 
-Kyllikki is highly opionated framework for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to generate code that is easy to read and understand how your API works. For that reason @decorator based aproach is used. It is build with idea that code should generate OpenApi v3+ documentation from the API.
+Kyllikki is highly opionated template for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to provide framework that is easy to read and understand. For this reason @decorator based aproach is used. Another leading idea is that code should generate Open Api v3.0.0 code.
 
-This library works well with [Serverless-webpack](https://github.com/serverless-heaven/serverless-webpack). Requires experimental decorators supports in `tsconfig.json`. Add `"experimentalDecorators": true` to `compilerOptions`.
+This template relies on [Serverless-webpack](https://github.com/serverless-heaven/serverless-webpack). Manual installation is possible also.
 
 Has lot of freedom:
 
@@ -17,18 +17,28 @@ It has several limitations:
 
 ## Quick start
 
-Requires serverless cli installed globally _(npm install -g serverless)_
+### Prerequisites
+
+Requires serverless cli installed globally
 
 ```bash
-> serverless create --template-url https://github.com/rallu/kyllikki/tree/master/template --path myproject
-> cd myproject
-> npm install
+$ npm install -g serverless
 ```
+
+### Installation
+
+```bash
+$ serverless create --template-url https://github.com/rallu/kyllikki/tree/master/template --path myproject
+$ cd myproject
+$ npm install
+```
+
+### Testing that it works
 
 And then you can run the hello world to test it.
 
 ```bash
-> serverless invoke local -f hello --data '{"resource": "/hello", "httpMethod": "GET"}'
+$ serverless invoke local -f hello --data '{"resource": "/hello", "httpMethod": "GET"}'
 ```
 
 ## Basic examples
@@ -251,3 +261,12 @@ export class Cats {
 ### Automatic response schema generation from DynamoDB objects
 
 Todo.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE file](LICENSE) for details
+
+## Acknowledgments
+
+- [anttiviljami/openapi-backend](https://github.com/anttiviljami/openapi-backend) inspiring to create this library.
+- To Kyllikki (a cat) for biting my toe while trying to think name for this library.

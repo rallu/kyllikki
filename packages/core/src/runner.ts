@@ -17,7 +17,11 @@ export class ApiRunner {
     if (method === undefined) {
       return new ApiResponse(
         {
-          error: "Requested api endpoint not found"
+          error: "Requested api endpoint not found",
+          params: {
+            method: event.httpMethod,
+            resource: event.resource
+          }
         },
         404
       ).toApigatewayResponse();
@@ -29,7 +33,7 @@ export class ApiRunner {
       } catch (e) {
         return new ApiResponse(
           {
-            error: e.message
+            error: `Validation error: ${e.message}`
           },
           403
         ).toApigatewayResponse();
