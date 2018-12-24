@@ -17,19 +17,9 @@ interface ApiErrorParams {
   description?: string;
 }
 
-export interface KyllikkiApiParams {
+export interface KyllikkiApiParams extends ApiParams {
   method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH" | "ANY";
   resource: string;
-  summary?: string;
-  description?: string;
-  tags?: Array<string>;
-  validation?: ApiValidations;
-  responses?: {
-    [code: number]: {
-      description: string;
-    };
-  };
-  errors?: Array<ApiErrorParams>;
 }
 
 export interface ApiParams {

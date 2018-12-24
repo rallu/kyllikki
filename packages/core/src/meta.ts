@@ -1,7 +1,6 @@
 import { APIGatewayEvent } from "aws-lambda";
 import { ApiResponse } from "./response";
 import { KyllikkiApiParams } from "./kyllikkiApi";
-import { JSONSchema7 } from "json-schema";
 
 type KyllikkiApiFunction = (event: APIGatewayEvent) => ApiResponse;
 
@@ -10,17 +9,6 @@ export interface OpenApiFunctionObject {
   methodName: string;
   func: KyllikkiApiFunction;
   openApiParams: KyllikkiApiParams;
-  responses?: {
-    [code: number]: {
-      description?: string;
-      content: {
-        "application/json": {
-          schema: JSONSchema7;
-          example?: any;
-        };
-      };
-    };
-  };
 }
 
 export class KyllikkiMeta {

@@ -20,10 +20,10 @@
     "@aws/dynamodb-data-marshaller": "^0.7.3",
     "@kyllikki/core": "^0.1.1",
     "@types/aws-lambda": "^8.10.16",
+    "@types/json-schema": "^7.0.1",
     "@types/node": "^10.12.17",
     "aws-sdk": "^2.379.0",
-    "joi-to-json-schema": "^3.4.0",
-    "json-schema": "^0.2.3"
+    "joi-to-json-schema": "^3.4.0"
   },
   "files": [
     "dist/**/*",

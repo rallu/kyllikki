@@ -109,6 +109,7 @@ export class OpenApi {
       }
       openApiPaths[method.openApiParams.resource][method.openApiParams.method.toLocaleLowerCase()] = schema;
     });
+
     return {
       statusCode: 200,
       body: JSON.stringify({
