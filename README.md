@@ -68,7 +68,7 @@ export class Cats {
   async saveCat(event: APIGatewayEvent) {
     await myCatStore.save(JSON.parse(event.body));
     return {
-      succesfull: true
+      succesful: true
     };
   }
 }
@@ -109,7 +109,7 @@ export class Cats {
   async saveCat(event: APIGatewayEvent) {
     await myCatStore.save(JSON.parse(event.body));
     return {
-      succesfull: true
+      succesful: true
     };
   }
 }
@@ -173,7 +173,7 @@ export class Cats {
   async saveCat(event: APIGatewayEvent) {
     await myCatStore.save(JSON.parse(event.body)); // may throw `new MyCatStoreSaveError`
     return {
-      succesfull: true
+      succesful: true
     };
   }
 }
