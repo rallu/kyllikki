@@ -89,7 +89,11 @@ function KyllikkiApi(params: KyllikkiApiParams) {
   return function(target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     const originalFunction = descriptor.value;
 
-    descriptor.value = async (event: APIGatewayEvent) => {
+    if (isDuplicate(params, propertyKey, descriptor)) {
+      throw new Error(`Property ${String(propertyKey)} has been already registered as ${params.method}`);
+    }
+
+    const kyllikkifiedFunction = async (event: APIGatewayEvent): Promise<ApiResponse> => {
       const result = await originalFunction(event);
       return new ApiResponse(result);
     };
@@ -97,8 +101,15 @@ function KyllikkiApi(params: KyllikkiApiParams) {
     KyllikkiMeta.registerMethod({
       identifierFunction: originalFunction,
       methodName: propertyKey as string,
-      func: descriptor.value,
+      kyllikkifiedFunction: kyllikkifiedFunction,
       openApiParams: params
     });
   };
+}
+
+function isDuplicate(params: KyllikkiApiParams, propertyKey: string | symbol, descriptor: PropertyDescriptor): boolean {
+  const method = KyllikkiMeta.methods.find(method => {
+    return method.openApiParams.method === params.method && method.identifierFunction == descriptor.value;
+  });
+  return method !== undefined;
 }

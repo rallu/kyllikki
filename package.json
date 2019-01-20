@@ -7,7 +7,12 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.15",
+    "@types/jest": "^23.3.13",
     "@types/node": "^10.12.12",
-    "lerna": "^3.6.0"
-  }
+    "jest": "^23.6.0",
+    "lerna": "^3.6.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.4"
+  },
+  "dependencies": {}
 }

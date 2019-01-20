@@ -2,14 +2,14 @@ import * as Joi from "joi";
 import { KyllikkiMeta } from "./meta";
 import { ApiResponse } from "./response";
 import { KyllikkiApiParams } from "./kyllikkiApi";
-import { APIGatewayEvent } from "aws-lambda";
+import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export class ApiRunner {
   constructor(apiEndpoints: Array<any>) {
     // Nothing to do them yet. But they need to be listed in order for decorators to run them.
   }
 
-  async run(event: APIGatewayEvent): Promise<any> {
+  async run(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
     const method = KyllikkiMeta.methods.find(
       method => method.openApiParams.resource === event.resource && method.openApiParams.method === event.httpMethod
     );
@@ -41,21 +41,20 @@ export class ApiRunner {
     }
 
     try {
-      return (await method.func(event, parseBody(event))).toApigatewayResponse();
+      return (await method.kyllikkifiedFunction(event, parseBody(event))).toApigatewayResponse();
     } catch (e) {
-      if (method.openApiParams.errors) {
+      if (typeof method.openApiParams.errors !== "undefined") {
         for (const err of method.openApiParams.errors) {
           if (e instanceof err.type) {
             if (err.resolve) {
               return err.resolve(e).toApigatewayResponse();
             } else if (err.code) {
               // @ts-ignore: instanceof focks up e typing
-              return new ApiResponse(e.message, err.code);
+              return new ApiResponse(e.message, err.code).toApigatewayResponse();
             }
           }
         }
       }
-
       return new ApiResponse({ error: "Unhandled server error" }, 500).toApigatewayResponse();
     }
   }
@@ -85,7 +84,7 @@ async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayEve
   return Promise.all(promises);
 }
 
-function parseBody(event: APIGatewayEvent): any {
+function parseBody(event: APIGatewayEvent): any | undefined {
   if (!event.body) {
     return undefined;
   }
