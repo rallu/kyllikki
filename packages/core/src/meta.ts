@@ -2,7 +2,7 @@ import { APIGatewayEvent } from "aws-lambda";
 import { ApiResponse } from "./response";
 import { KyllikkiApiParams } from "./kyllikkiApi";
 
-type KyllikkiApiFunction = (event: APIGatewayEvent) => ApiResponse;
+type KyllikkiApiFunction = (event: APIGatewayEvent, body?: any) => ApiResponse;
 
 export interface OpenApiFunctionObject {
   identifierFunction: KyllikkiApiFunction;

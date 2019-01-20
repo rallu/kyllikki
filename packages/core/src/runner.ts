@@ -41,7 +41,7 @@ export class ApiRunner {
     }
 
     try {
-      return (await method.func(event)).toApigatewayResponse();
+      return (await method.func(event, parseBody(event))).toApigatewayResponse();
     } catch (e) {
       if (method.openApiParams.errors) {
         for (const err of method.openApiParams.errors) {
@@ -73,12 +73,7 @@ async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayEve
     promises.push(Joi.validate(event.queryStringParameters || {}, validations.queryStringParameters));
   }
   if (validations.body && event.body) {
-    let payload;
-    try {
-      payload = JSON.parse(event.body);
-    } catch (e) {
-      // ignore JSON parse error
-    }
+    let payload = parseBody(event);
     promises.push(Joi.validate(payload || {}, validations.body));
   }
   if (validations.headers) {
@@ -88,4 +83,17 @@ async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayEve
     promises.push(Joi.validate(event.pathParameters || {}, validations.path));
   }
   return Promise.all(promises);
+}
+
+function parseBody(event: APIGatewayEvent): any {
+  if (!event.body) {
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(event.body);
+  } catch (e) {
+    // ignore JSON parse error
+  }
+  return undefined;
 }
