@@ -55,7 +55,8 @@ export class ApiRunner {
           }
         }
       }
-      return new ApiResponse({ error: "Unhandled server error" }, 500).toApigatewayResponse();
+      // as default return error
+      throw e;
     }
   }
 }
