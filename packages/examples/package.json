@@ -6,8 +6,8 @@
   },
   "dependencies": {
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
-    "@kyllikki/core": "^0.1.0",
-    "@kyllikki/openapi": "^0.1.0",
+    "@kyllikki/core": "^0.2.0",
+    "@kyllikki/openapi": "^0.2.0",
     "@types/aws-lambda": "^8.10.15",
     "@types/node": "^10.12.12",
     "joi": "^14.3.0",
@@ -19,5 +19,6 @@
   },
   "devDependencies": {
     "ts-node": "^7.0.1"
-  }
+  },
+  "version": "0.2.0"
 }
