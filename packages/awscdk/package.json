@@ -1,0 +1,29 @@
+{
+  "name": "@kyllikki/awscdk",
+  "version": "0.1.4",
+  "description": "Generate AWS CDK Lambda Enviroment with Kyllikki",
+  "author": "Juha-Pekka Rajaniemi",
+  "homepage": "https://github.com/rallu/kyllikki#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "LICENSE",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rallu/kyllikki.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/rallu/kyllikki/issues"
+  },
+  "dependencies": {
+    "@kyllikki/core": "^0.1.4"
+  }
+}
