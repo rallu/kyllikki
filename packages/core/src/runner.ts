@@ -4,9 +4,22 @@ import { ApiResponse } from "./response";
 import { KyllikkiApiParams } from "./kyllikkiApi";
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 
+interface iLogger {
+  info: Function;
+  log: Function;
+  error: Function;
+  warn: Function;
+}
+
 export class ApiRunner {
-  constructor(apiEndpoints: Array<any>) {
-    // Nothing to do them yet. But they need to be listed in order for decorators to run them.
+  logger: iLogger;
+  constructor(apiEndpoints: Array<any>, logger?: iLogger) {
+    this.logger = logger || {
+      info: () => undefined,
+      log: () => undefined,
+      error: () => undefined,
+      warn: () => undefined
+    };
   }
 
   async run(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
@@ -15,13 +28,15 @@ export class ApiRunner {
     );
 
     if (method === undefined) {
+      const params = {
+        method: event.httpMethod,
+        resource: event.resource
+      };
+      this.logger.warn("Api endpoint not found", params);
       return new ApiResponse(
         {
           error: "Requested api endpoint not found",
-          params: {
-            method: event.httpMethod,
-            resource: event.resource
-          }
+          params
         },
         404
       ).toApigatewayResponse();
@@ -31,6 +46,7 @@ export class ApiRunner {
       try {
         await runValidations(method.openApiParams, event);
       } catch (e) {
+        this.logger.warn("Validation error", e.message);
         return new ApiResponse(
           {
             error: `Validation error: ${e.message}`
@@ -41,6 +57,7 @@ export class ApiRunner {
     }
 
     try {
+      this.logger.info("Running function", event.httpMethod, event.resource);
       return (await method.kyllikkifiedFunction(event, parseBody(event))).toApigatewayResponse();
     } catch (e) {
       if (typeof method.openApiParams.errors !== "undefined") {

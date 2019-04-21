@@ -88,6 +88,19 @@ export const main: Handler = async (event: APIGatewayEvent, context: Context, ca
 };
 ```
 
+ApiRunner takes logger as second parameter. Uses typical window.console interface for log(), warn(), info() and error() to log out into. For example to log into standard console:
+
+```typescript
+export const main: Handler = async (event: APIGatewayEvent, context: Context, callback: Callback) => {
+  return await new ApiRunner(
+    [
+      new Cats() // List of classes you wish for this handler to respond to
+    ],
+    console
+  ).run(event);
+};
+```
+
 ### Input validation
 
 Input validation system uses [joi](https://github.com/hapijs/joi) to validate incoming data. On failing validation 400 HTTP error is thrown.
