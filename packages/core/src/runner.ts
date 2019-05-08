@@ -74,6 +74,7 @@ export class ApiRunner {
           }
         }
       }
+      this.logger.error("Error thrown", e);
       // as default return error
       throw e;
     }
