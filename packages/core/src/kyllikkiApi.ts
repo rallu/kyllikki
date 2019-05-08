@@ -33,6 +33,11 @@ export interface ApiParams {
     };
   };
   errors?: Array<ApiErrorParams>;
+  headers?: CustomApiHeaders;
+}
+
+export interface CustomApiHeaders {
+  [key: string]: string;
 }
 
 export type OpenApiError = (error: any) => ApiResponse;

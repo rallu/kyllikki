@@ -58,7 +58,9 @@ export class ApiRunner {
 
     try {
       this.logger.info("Running function", event.httpMethod, event.resource);
-      return (await method.kyllikkifiedFunction(event, parseBody(event))).toApigatewayResponse();
+      return (await method.kyllikkifiedFunction(event, parseBody(event))).toApigatewayResponse(
+        method.openApiParams.headers
+      );
     } catch (e) {
       if (typeof method.openApiParams.errors !== "undefined") {
         for (const err of method.openApiParams.errors) {
