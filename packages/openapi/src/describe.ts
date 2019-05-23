@@ -66,6 +66,10 @@ export class OpenApi {
             }
           };
         }
+        if (validation.headers) {
+          const headerValidatorSchemas = joiToJsonConvert(validation.headers);
+          schema.parameters.push(...validatorsToOpenApiSchema(headerValidatorSchemas, "header"));
+        }
         if (validation.path) {
           const pathValidatorsSchemas = joiToJsonConvert(validation.path);
           schema.parameters.push(...validatorsToOpenApiSchema(pathValidatorsSchemas, "path"));
@@ -118,7 +122,11 @@ export class OpenApi {
         paths: openApiPaths,
         servers,
         components
-      })
+      }),
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+      }
     };
   }
 }

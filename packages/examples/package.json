@@ -2,7 +2,8 @@
   "name": "examples",
   "private": true,
   "scripts": {
-    "example-pets": "serverless invoke local -f apihandler --path minimal/payload.json"
+    "example-pets": "serverless invoke local -f apihandler --path minimal/payload.json",
+    "openapi": "serverless invoke local -f openapi --path minimal/payload.json"
   },
   "dependencies": {
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",

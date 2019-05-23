@@ -14,7 +14,12 @@ export class PetsApi {
     validation: {
       body: Joi.object().keys({
         foo: Joi.string()
-      })
+      }),
+      headers: Joi.object()
+        .keys({
+          bar: Joi.string()
+        })
+        .required()
     }
   })
   @OpenApiResponse({
