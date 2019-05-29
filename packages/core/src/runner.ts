@@ -22,6 +22,11 @@ export class ApiRunner {
     };
   }
 
+  /**
+   * Find and run methods registered to Kyllikki.
+   *
+   * @param event Event passed from handler
+   */
   async run(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
     const method = KyllikkiMeta.methods.find(
       method => method.openApiParams.resource === event.resource && method.openApiParams.method === event.httpMethod

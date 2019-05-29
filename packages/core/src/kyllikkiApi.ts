@@ -23,16 +23,37 @@ export interface KyllikkiApiParams extends ApiParams {
 }
 
 export interface ApiParams {
+  /**
+   * Short summary of endpoint
+   */
   summary?: string;
+  /**
+   * Longer description of endpoint. Can contain markdown.
+   */
   description?: string;
+  /**
+   * Tags that this api endpoint is attached to
+   */
   tags?: Array<string>;
+  /**
+   * Validations for query, body, headers and path.
+   */
   validation?: ApiValidations;
+  /**
+   * Known responses
+   */
   responses?: {
     [code: number]: {
       description: string;
     };
   };
+  /**
+   * List of errors that will be handled.
+   */
   errors?: Array<ApiErrorParams>;
+  /**
+   * Headers added to response
+   */
   headers?: CustomApiHeaders;
 }
 
@@ -42,6 +63,12 @@ export interface CustomApiHeaders {
 
 export type OpenApiError = (error: any) => ApiResponse;
 
+/**
+ * Decorator for GET endpoint
+ *
+ * @param resource Serverless resources string that GET responses (start with /)
+ * @param params Api parameters
+ */
 export function GET(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "GET",
@@ -50,6 +77,12 @@ export function GET(resource: string, params?: ApiParams) {
   });
 }
 
+/**
+ * Decorator for POST endpoint
+ *
+ * @param resource Serverless resources string that POST responses (start with /)
+ * @param params Api parameters
+ */
 export function POST(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "POST",
@@ -58,6 +91,12 @@ export function POST(resource: string, params?: ApiParams) {
   });
 }
 
+/**
+ * Decorator for DELETE endpoint
+ *
+ * @param resource Serverless resources string that DELETE responses (start with /)
+ * @param params Api parameters
+ */
 export function DELETE(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "DELETE",
@@ -66,6 +105,12 @@ export function DELETE(resource: string, params?: ApiParams) {
   });
 }
 
+/**
+ * Decorator for PUT endpoint
+ *
+ * @param resource Serverless resources string that PUT responses (start with /)
+ * @param params Api parameters
+ */
 export function PUT(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "PUT",
@@ -74,6 +119,12 @@ export function PUT(resource: string, params?: ApiParams) {
   });
 }
 
+/**
+ * Decorator for PATCH endpoint
+ *
+ * @param resource Serverless resources string that PATCH responses (start with /)
+ * @param params Api parameters
+ */
 export function PATCH(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "PATCH",
@@ -82,6 +133,12 @@ export function PATCH(resource: string, params?: ApiParams) {
   });
 }
 
+/**
+ * Decorator for ANY endpoint (Api Gateway special)
+ *
+ * @param resource Serverless resources string that ANY responses (start with /)
+ * @param params Api parameters
+ */
 export function ANY(resource: string, params?: ApiParams) {
   return KyllikkiApi({
     method: "ANY",
