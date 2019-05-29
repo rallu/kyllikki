@@ -28,6 +28,23 @@ class TestApi {
   error(event: APIGatewayEvent) {
     throw new TestError();
   }
+
+  @GET("/unkownerror")
+  unknownerror(event: APIGatewayEvent) {
+    console.log("unknown error");
+    throw new Error();
+  }
+
+  @GET("/localmethodtest")
+  localmethodtest(event: APIGatewayEvent) {
+    return this.localmethod();
+  }
+
+  private localmethod() {
+    return {
+      result: "local works"
+    };
+  }
 }
 
 test("Api Runner can be initialized", () => {
@@ -73,4 +90,16 @@ test("Should return error", async () => {
   const api = new ApiRunner([new TestApi()]);
   const result = await api.run(testEvents.throwsError);
   expect(result.statusCode).toBe(555);
+
+  const unknownResult = await api.run(testEvents.unknownError);
+  console.log(unknownResult);
+});
+
+test("Local method test should work", async () => {
+  const api = new ApiRunner([new TestApi()]);
+  expect((await api.run(testEvents.testLocalMethod)).body).toBe(
+    JSON.stringify({
+      result: "local works"
+    })
+  );
 });

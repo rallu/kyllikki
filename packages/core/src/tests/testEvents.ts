@@ -55,6 +55,16 @@ const throwsError: APIGatewayEvent = Object.assign({}, baseRequest, {
   resource: "/throwserror"
 } as APIGatewayEvent);
 
+const unknownError: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/unknownerror",
+  resource: "/unknownerror"
+} as APIGatewayEvent);
+
+const testLocalMethod: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/localmethodtest",
+  resource: "/localmethodtest"
+} as APIGatewayEvent);
+
 export const testEvents = {
   foobar,
   testGET,
@@ -62,5 +72,7 @@ export const testEvents = {
   testPUT,
   testDELETE,
   testANY,
-  throwsError
+  throwsError,
+  unknownError,
+  testLocalMethod
 };
