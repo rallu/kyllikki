@@ -143,3 +143,20 @@ test("Trying to create same api endpoint twice should fail", async () => {
     new ShouldFailApi();
   }).toThrowError("already been registered");
 });
+
+test("Body variable should be parsed", async () => {
+  class BodyTestApi {
+    @POST("/test")
+    async test(event, body) {
+      return {
+        result: body.foo
+      };
+    }
+  }
+
+  expect((await new ApiRunner([new BodyTestApi()]).run(testEvents.testPOST)).body).toBe(
+    JSON.stringify({
+      result: "bar"
+    })
+  );
+});

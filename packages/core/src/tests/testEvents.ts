@@ -29,7 +29,10 @@ const testGET: APIGatewayEvent = Object.assign({}, baseRequest, {
 const testPOST: APIGatewayEvent = Object.assign({}, baseRequest, {
   path: "/test",
   resource: "/test",
-  httpMethod: "POST"
+  httpMethod: "POST",
+  body: JSON.stringify({
+    foo: "bar"
+  })
 });
 
 const testPUT: APIGatewayEvent = Object.assign({}, baseRequest, {
