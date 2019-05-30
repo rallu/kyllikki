@@ -3,12 +3,13 @@
   "private": true,
   "scripts": {
     "example-pets": "serverless invoke local -f apihandler --path minimal/payload.json",
-    "openapi": "serverless invoke local -f openapi --path minimal/payload.json"
+    "openapi": "serverless invoke local -f openapi --path minimal/payload.json",
+    "offline": "serverless offline start"
   },
   "dependencies": {
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
-    "@kyllikki/core": "^0.2.3",
-    "@kyllikki/openapi": "^0.2.3",
+    "@kyllikki/core": "file:../core",
+    "@kyllikki/openapi": "file:../openapi",
     "@types/aws-lambda": "^8.10.23",
     "@types/node": "^10.12.12",
     "joi": "^14.3.0",
@@ -19,6 +20,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "serverless-offline": "^4.10.6",
     "ts-node": "^7.0.1"
   },
   "version": "0.2.3"

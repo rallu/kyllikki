@@ -1,6 +1,6 @@
 # Kyllikki API template
 
-Kyllikki is highly opionated template for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to provide framework that is easy to read and understand. For this reason @decorator based aproach is used. Another leading idea is that code should generate Open Api v3.0.0 code.
+Kyllikki (Küllikki) is highly opionated template for building AWS Lambda API [Serverless](https://www.serverless.com) endpoints with typescript decorators. Goal is to provide framework that is easy to read and understand. For this reason @decorator based aproach is used. Another leading idea is that code should generate Open Api v3.0.0 code.
 
 This template relies on [Serverless-webpack](https://github.com/serverless-heaven/serverless-webpack). Manual installation is possible also.
 

@@ -11,6 +11,21 @@ class Pet {
 
 export class PetsApi {
   @GET("/pets", {
+    summary: "Get pets",
+    description: `
+    # This is markdown description
+
+    It is possible to add markdown as description and display them more beautifully.
+    `,
+    headers: {
+      "x-custom-header": "Some extra header"
+    },
+    tags: ["pets"],
+    responses: {
+      200: {
+        description: "Normal response"
+      }
+    },
     validation: {
       body: Joi.object().keys({
         foo: Joi.string()

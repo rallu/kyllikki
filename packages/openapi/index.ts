@@ -1,2 +1,2 @@
 export { OpenApiResponse } from "./src/decorators";
-export { OpenApi } from "./src/describe";
+export { OpenApi } from "./src/openapi";

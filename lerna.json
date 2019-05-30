@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/*",
+    "template"
   ],
   "version": "0.2.3"
 }

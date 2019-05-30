@@ -6,6 +6,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-offline
 
 custom:
   webpack:
