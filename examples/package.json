@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
-    "@kyllikki/core": "file:../core",
-    "@kyllikki/openapi": "file:../openapi",
+    "@kyllikki/core": "file:../packages/core",
+    "@kyllikki/openapi": "file:../packages/openapi",
     "@types/aws-lambda": "^8.10.23",
     "@types/node": "^10.12.12",
     "joi": "^14.3.0",
