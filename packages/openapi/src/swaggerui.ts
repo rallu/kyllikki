@@ -14,6 +14,10 @@ export const swaggerui = spec => `
       body {
         margin: 0;
       }
+
+      form.download-url-wrapper {
+        display: none;
+      }
     </style>
   </head>
   <body>
