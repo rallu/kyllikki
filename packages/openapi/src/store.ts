@@ -1,24 +1,21 @@
 import { OpenApiResponseParams } from "./decorators";
 
-interface IResponse {
-  identifierFunction: Function;
-  params: OpenApiResponseParams;
-}
+export const OpenApiRootObjectName = "[KyllikkiOpenApi]";
 
 export class ResponseStore {
   static registerResponse(target: any, identifierFunction: Function, params: OpenApiResponseParams) {
-    if (!target["KyllikkiOpenApi"]) {
-      target["KyllikkiOpenApi"] = [];
+    if (!target[OpenApiRootObjectName]) {
+      target[OpenApiRootObjectName] = [];
     }
-    target["KyllikkiOpenApi"].push({
+    target[OpenApiRootObjectName].push({
       identifierFunction,
       params
     });
   }
 
   static getParams(target, identifierFunction: Function): OpenApiResponseParams[] {
-    return target["KyllikkiOpenApi"]
-      .filter(response => response.identifierFunction === identifierFunction)
-      .map(response => response.params);
+    return target[OpenApiRootObjectName].filter(response => response.identifierFunction === identifierFunction).map(
+      response => response.params
+    );
   }
 }
