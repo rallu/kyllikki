@@ -1,12 +1,12 @@
 {
   "name": "aws-nodejs-typescript-kyllikki",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "Serverless webpack example using Typescript and Kyllikki",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@kyllikki/core": "^0.2.3"
+    "@kyllikki/core": "^0.3.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.23",

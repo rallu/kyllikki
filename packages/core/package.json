@@ -1,6 +1,6 @@
 {
   "name": "@kyllikki/core",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Opinionated framework to build Serverless API's in AWS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
