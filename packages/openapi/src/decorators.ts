@@ -16,6 +16,6 @@ interface DynamoReferenceObject {
 
 export function OpenApiResponse(params: OpenApiResponseParams) {
   return function(target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    ResponseStore.registerResponse(descriptor.value, params);
+    ResponseStore.registerResponse(target, descriptor.value, params);
   };
 }

@@ -1,7 +1,7 @@
 import { APIGatewayEvent } from "aws-lambda";
 import * as Joi from "joi";
-import { KyllikkiMeta } from "./meta";
 import { ApiResponse } from "./response";
+import { KyllikkiRootObject, KyllikkiRootObjectName } from "./runner";
 
 export interface ApiValidations {
   queryStringParameters?: Joi.ObjectSchema;
@@ -149,29 +149,22 @@ export function ANY(resource: string, params?: ApiParams) {
 
 function KyllikkiApi(params: KyllikkiApiParams) {
   return function(target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    const originalFunction = descriptor.value;
-
-    if (isDuplicate(params, propertyKey, descriptor)) {
-      throw new Error(`Property ${String(propertyKey)} has been already registered as ${params.method}`);
+    if (!target[KyllikkiRootObjectName]) {
+      target[KyllikkiRootObjectName] = [];
     }
 
-    const kyllikkifiedFunction = async (event: APIGatewayEvent): Promise<ApiResponse> => {
-      const result = await originalFunction(event);
-      return new ApiResponse(result);
+    const duplicate = (target[KyllikkiRootObjectName] as KyllikkiRootObject[]).find(
+      item => item.openApiParams.resource === params.resource && item.openApiParams.method === params.method
+    );
+    if (duplicate) {
+      throw new Error(`Resource ${params.method} ${params.resource} has already been registered to this class!`);
+    }
+
+    const rootObject: KyllikkiRootObject = {
+      methodName: propertyKey,
+      openApiParams: params,
+      identifierFunction: descriptor.value
     };
-
-    KyllikkiMeta.registerMethod({
-      identifierFunction: originalFunction,
-      methodName: propertyKey as string,
-      kyllikkifiedFunction: kyllikkifiedFunction,
-      openApiParams: params
-    });
+    target[KyllikkiRootObjectName].push(rootObject);
   };
-}
-
-function isDuplicate(params: KyllikkiApiParams, propertyKey: string | symbol, descriptor: PropertyDescriptor): boolean {
-  const method = KyllikkiMeta.methods.find(method => {
-    return method.openApiParams.method === params.method && method.identifierFunction == descriptor.value;
-  });
-  return method !== undefined;
 }

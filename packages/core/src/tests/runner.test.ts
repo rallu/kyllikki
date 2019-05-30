@@ -6,6 +6,11 @@ import { APIGatewayEvent } from "aws-lambda";
 class TestError extends Error {}
 
 class TestApi {
+  testvar: string;
+  constructor(testvar = "foobar") {
+    this.testvar = testvar;
+  }
+
   @GET("/test")
   @POST("/test")
   @DELETE("/test")
@@ -27,6 +32,30 @@ class TestApi {
   })
   error(event: APIGatewayEvent) {
     throw new TestError();
+  }
+
+  @GET("/unkownerror")
+  unknownerror(event: APIGatewayEvent) {
+    console.log("unknown error");
+    throw new Error();
+  }
+
+  @GET("/localmethodtest")
+  localmethodtest(event: APIGatewayEvent) {
+    return this.localmethod();
+  }
+
+  @GET("/testvar")
+  constructorTestVar(event: APIGatewayEvent) {
+    return {
+      result: this.testvar
+    };
+  }
+
+  private localmethod() {
+    return {
+      result: "local works"
+    };
   }
 }
 
@@ -69,8 +98,65 @@ test("Test api should return to all functions", async () => {
   );
 });
 
-test("Should return error", async () => {
+test("Should return predefined error", async () => {
   const api = new ApiRunner([new TestApi()]);
   const result = await api.run(testEvents.throwsError);
   expect(result.statusCode).toBe(555);
+});
+
+test("Local method test should work", async () => {
+  const api = new ApiRunner([new TestApi()]);
+  expect((await api.run(testEvents.testLocalMethod)).body).toBe(
+    JSON.stringify({
+      result: "local works"
+    })
+  );
+});
+
+test("Class constructor parameters should be readable", async () => {
+  const api = new ApiRunner([new TestApi("barbazbaz")]);
+  expect((await api.run(testEvents.constructorTestVar)).body).toBe(
+    JSON.stringify({
+      result: "barbazbaz"
+    })
+  );
+});
+
+test("Trying to create same api endpoint twice should fail", async () => {
+  expect(() => {
+    class ShouldFailApi {
+      @GET("/same")
+      @GET("/same")
+      something() {}
+    }
+    new ShouldFailApi();
+  }).toThrowError("already been registered");
+
+  expect(() => {
+    class ShouldFailApi {
+      @GET("/same")
+      something() {}
+
+      @GET("/same")
+      something2() {}
+    }
+    new ShouldFailApi();
+  }).toThrowError("already been registered");
+});
+
+test("Body variable should be parsed", async () => {
+  class BodyTestApi {
+    @POST("/test")
+    async test(event, body) {
+      return {
+        result: body.foo
+      };
+    }
+  }
+
+  expect((await new ApiRunner([new BodyTestApi()]).run(testEvents.testPOST)).body).toBe(
+    JSON.stringify({
+      result: "bar"
+    })
+  );
 });

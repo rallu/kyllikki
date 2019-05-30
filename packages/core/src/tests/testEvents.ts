@@ -29,7 +29,10 @@ const testGET: APIGatewayEvent = Object.assign({}, baseRequest, {
 const testPOST: APIGatewayEvent = Object.assign({}, baseRequest, {
   path: "/test",
   resource: "/test",
-  httpMethod: "POST"
+  httpMethod: "POST",
+  body: JSON.stringify({
+    foo: "bar"
+  })
 });
 
 const testPUT: APIGatewayEvent = Object.assign({}, baseRequest, {
@@ -55,6 +58,21 @@ const throwsError: APIGatewayEvent = Object.assign({}, baseRequest, {
   resource: "/throwserror"
 } as APIGatewayEvent);
 
+const unknownError: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/unknownerror",
+  resource: "/unknownerror"
+} as APIGatewayEvent);
+
+const testLocalMethod: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/localmethodtest",
+  resource: "/localmethodtest"
+} as APIGatewayEvent);
+
+const constructorTestVar: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/testvar",
+  resource: "/testvar"
+} as APIGatewayEvent);
+
 export const testEvents = {
   foobar,
   testGET,
@@ -62,5 +80,8 @@ export const testEvents = {
   testPUT,
   testDELETE,
   testANY,
-  throwsError
+  throwsError,
+  unknownError,
+  testLocalMethod,
+  constructorTestVar
 };

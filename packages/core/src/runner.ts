@@ -1,5 +1,4 @@
 import * as Joi from "joi";
-import { KyllikkiMeta } from "./meta";
 import { ApiResponse } from "./response";
 import { KyllikkiApiParams } from "./kyllikkiApi";
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
@@ -11,9 +10,19 @@ interface iLogger {
   warn: Function;
 }
 
+export const KyllikkiRootObjectName = "[kyllikki]";
+
+export interface KyllikkiRootObject {
+  methodName: string | symbol;
+  openApiParams: KyllikkiApiParams;
+  identifierFunction: Function;
+}
+
 export class ApiRunner {
   logger: iLogger;
-  constructor(apiEndpoints: Array<any>, logger?: iLogger) {
+  apiEndpoints: Array<Object>;
+  constructor(apiEndpoints: Array<Object>, logger?: iLogger) {
+    this.apiEndpoints = apiEndpoints;
     this.logger = logger || {
       info: () => undefined,
       log: () => undefined,
@@ -28,11 +37,20 @@ export class ApiRunner {
    * @param event Event passed from handler
    */
   async run(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
-    const method = KyllikkiMeta.methods.find(
-      method => method.openApiParams.resource === event.resource && method.openApiParams.method === event.httpMethod
-    );
+    const foundApis = this.apiEndpoints
+      .filter(kyllikifiedClass => kyllikifiedClass[KyllikkiRootObjectName])
+      .map(kyllikifiedClass => {
+        const foundMethods = (kyllikifiedClass[KyllikkiRootObjectName] as KyllikkiRootObject[]).filter(
+          root => root.openApiParams.resource == event.resource && root.openApiParams.method === event.httpMethod
+        );
+        return {
+          kyllifiedClass: kyllikifiedClass,
+          method: foundMethods[0]
+        };
+      })
+      .filter(object => object.method);
 
-    if (method === undefined) {
+    if (foundApis.length === 0) {
       const params = {
         method: event.httpMethod,
         resource: event.resource
@@ -46,6 +64,25 @@ export class ApiRunner {
         404
       ).toApigatewayResponse();
     }
+
+    if (foundApis.length > 1) {
+      const params = {
+        method: event.httpMethod,
+        resource: event.resource
+      };
+      const error = "Multiple classes responed to same request - only one allowed!";
+      this.logger.warn(error, params);
+      return new ApiResponse(
+        {
+          error,
+          params
+        },
+        404
+      ).toApigatewayResponse();
+    }
+
+    const theClass = foundApis[0].kyllifiedClass;
+    const method = foundApis[0].method;
 
     if (method.openApiParams.validation) {
       try {
@@ -63,9 +100,8 @@ export class ApiRunner {
 
     try {
       this.logger.info("Running function", event.httpMethod, event.resource);
-      return (await method.kyllikkifiedFunction(event, parseBody(event))).toApigatewayResponse(
-        method.openApiParams.headers
-      );
+      const result = await theClass[method.methodName](event, parseBody(event));
+      return new ApiResponse(result).toApigatewayResponse(foundApis[0].method.openApiParams.headers);
     } catch (e) {
       if (typeof method.openApiParams.errors !== "undefined") {
         for (const err of method.openApiParams.errors) {
