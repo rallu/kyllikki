@@ -65,6 +65,11 @@ const testLocalMethod: APIGatewayEvent = Object.assign({}, baseRequest, {
   resource: "/localmethodtest"
 } as APIGatewayEvent);
 
+const constructorTestVar: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/testvar",
+  resource: "/testvar"
+} as APIGatewayEvent);
+
 export const testEvents = {
   foobar,
   testGET,
@@ -74,5 +79,6 @@ export const testEvents = {
   testANY,
   throwsError,
   unknownError,
-  testLocalMethod
+  testLocalMethod,
+  constructorTestVar
 };

@@ -6,16 +6,18 @@ interface IResponse {
 }
 
 export class ResponseStore {
-  static responses: IResponse[] = [];
-  static registerResponse(identifierFunction: Function, params: OpenApiResponseParams) {
-    this.responses.push({
+  static registerResponse(target: any, identifierFunction: Function, params: OpenApiResponseParams) {
+    if (!target["KyllikkiOpenApi"]) {
+      target["KyllikkiOpenApi"] = [];
+    }
+    target["KyllikkiOpenApi"].push({
       identifierFunction,
       params
     });
   }
 
-  static getParams(identifierFunction: Function): OpenApiResponseParams[] {
-    return this.responses
+  static getParams(target, identifierFunction: Function): OpenApiResponseParams[] {
+    return target["KyllikkiOpenApi"]
       .filter(response => response.identifierFunction === identifierFunction)
       .map(response => response.params);
   }
