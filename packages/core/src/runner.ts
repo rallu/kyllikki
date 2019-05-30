@@ -10,6 +10,8 @@ interface iLogger {
   warn: Function;
 }
 
+export const KyllikkiRootObjectName = "[kyllikki]";
+
 export interface KyllikkiRootObject {
   methodName: string | symbol;
   openApiParams: KyllikkiApiParams;
@@ -36,9 +38,9 @@ export class ApiRunner {
    */
   async run(event: APIGatewayEvent): Promise<APIGatewayProxyResult> {
     const foundApis = this.apiEndpoints
-      .filter(kyllikifiedClass => kyllikifiedClass["Kyllikki"])
+      .filter(kyllikifiedClass => kyllikifiedClass[KyllikkiRootObjectName])
       .map(kyllikifiedClass => {
-        const foundMethods = (kyllikifiedClass["Kyllikki"] as KyllikkiRootObject[]).filter(
+        const foundMethods = (kyllikifiedClass[KyllikkiRootObjectName] as KyllikkiRootObject[]).filter(
           root => root.openApiParams.resource == event.resource && root.openApiParams.method === event.httpMethod
         );
         return {

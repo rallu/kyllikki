@@ -1,7 +1,7 @@
 import { APIGatewayEvent } from "aws-lambda";
 import * as Joi from "joi";
 import { ApiResponse } from "./response";
-import { KyllikkiRootObject } from "./runner";
+import { KyllikkiRootObject, KyllikkiRootObjectName } from "./runner";
 
 export interface ApiValidations {
   queryStringParameters?: Joi.ObjectSchema;
@@ -149,11 +149,11 @@ export function ANY(resource: string, params?: ApiParams) {
 
 function KyllikkiApi(params: KyllikkiApiParams) {
   return function(target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    if (!target["Kyllikki"]) {
-      target["Kyllikki"] = [];
+    if (!target[KyllikkiRootObjectName]) {
+      target[KyllikkiRootObjectName] = [];
     }
 
-    const duplicate = (target["Kyllikki"] as KyllikkiRootObject[]).find(
+    const duplicate = (target[KyllikkiRootObjectName] as KyllikkiRootObject[]).find(
       item => item.openApiParams.resource === params.resource && item.openApiParams.method === params.method
     );
     if (duplicate) {
@@ -165,6 +165,6 @@ function KyllikkiApi(params: KyllikkiApiParams) {
       openApiParams: params,
       identifierFunction: descriptor.value
     };
-    target["Kyllikki"].push(rootObject);
+    target[KyllikkiRootObjectName].push(rootObject);
   };
 }
