@@ -133,7 +133,7 @@ async function runValidations(apiParams: KyllikkiApiParams, event: APIGatewayEve
   if (validations.queryStringParameters) {
     promises.push(Joi.validate(event.queryStringParameters || {}, validations.queryStringParameters));
   }
-  if (validations.body && event.body) {
+  if (validations.body) {
     let payload = parseBody(event);
     promises.push(Joi.validate(payload || {}, validations.body));
   }

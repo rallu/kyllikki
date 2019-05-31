@@ -2,6 +2,7 @@ import { ApiRunner } from "../runner";
 import { testEvents } from "./testEvents";
 import { GET, POST, DELETE, PUT, ANY } from "../kyllikkiApi";
 import { APIGatewayEvent } from "aws-lambda";
+import * as joi from "joi";
 
 class TestError extends Error {}
 
@@ -159,4 +160,27 @@ test("Body variable should be parsed", async () => {
       result: "bar"
     })
   );
+});
+
+test("Body validation without body should fail", async () => {
+  class BodyTestApi {
+    @POST("/test", {
+      validation: {
+        body: joi
+          .object()
+          .keys({
+            shouldExists: joi.string().required()
+          })
+          .required()
+      }
+    })
+    async test(event, body) {
+      return {
+        result: ""
+      };
+    }
+  }
+
+  const result = await new ApiRunner([new BodyTestApi()]).run(testEvents.testPOSTWithoutBody);
+  expect(result.statusCode).toBeGreaterThan(200);
 });

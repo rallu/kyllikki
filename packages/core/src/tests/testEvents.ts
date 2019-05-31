@@ -73,6 +73,13 @@ const constructorTestVar: APIGatewayEvent = Object.assign({}, baseRequest, {
   resource: "/testvar"
 } as APIGatewayEvent);
 
+const testPOSTWithoutBody: APIGatewayEvent = Object.assign({}, baseRequest, {
+  path: "/test",
+  resource: "/test",
+  httpMethod: "POST",
+  body: null
+});
+
 export const testEvents = {
   foobar,
   testGET,
@@ -83,5 +90,6 @@ export const testEvents = {
   throwsError,
   unknownError,
   testLocalMethod,
-  constructorTestVar
+  constructorTestVar,
+  testPOSTWithoutBody
 };
