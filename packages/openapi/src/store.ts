@@ -14,6 +14,9 @@ export class ResponseStore {
   }
 
   static getParams(target, identifierFunction: Function): OpenApiResponseParams[] {
+    if (!target[OpenApiRootObjectName]) {
+      return [];
+    }
     return target[OpenApiRootObjectName].filter(response => response.identifierFunction === identifierFunction).map(
       response => response.params
     );
