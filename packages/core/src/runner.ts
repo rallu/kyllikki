@@ -93,7 +93,7 @@ export class ApiRunner {
           {
             error: `Validation error: ${e.message}`
           },
-          403
+          400
         ).toApigatewayResponse();
       }
     }
